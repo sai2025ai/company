@@ -1,4 +1,4 @@
-export type PageType = 'dashboard' | 'teams' | 'board' | 'sops' | 'team-management' | 'agents' | 'companies' | 'assets';
+export type PageType = 'dashboard' | 'teams' | 'board' | 'team-management' | 'agents' | 'companies' | 'assets';
 
 export interface CompanyGoal {
   id: string;

@@ -16,7 +16,6 @@ export function Sidebar({ activePage, onNavigate }: SidebarProps) {
     { id: 'assets', label: '数字资产', icon: <Database size={20} /> },
     { id: 'agents', label: 'Agent', icon: <Bot size={20} /> },
     { id: 'teams', label: '履约团队', icon: <Users size={20} /> },
-    { id: 'sops', label: '执行SOP库', icon: <Workflow size={20} /> },
   ];
 
   return (

@@ -8,7 +8,6 @@ import { Layout } from './components/layout/Layout';
 import { Dashboard } from './pages/Dashboard';
 import { Teams } from './pages/Teams';
 import { Board } from './pages/Board';
-import { SOPs } from './pages/SOPs';
 import { TeamManagement } from './pages/TeamManagement';
 import { Agents } from './pages/Agents';
 import { Companies } from './pages/Companies';
@@ -23,7 +22,6 @@ export default function App() {
       case 'dashboard': return <Dashboard />;
       case 'teams': return <Teams />;
       case 'board': return <Board />;
-      case 'sops': return <SOPs />;
       case 'team-management': return <TeamManagement />;
       case 'agents': return <Agents />;
       case 'companies': return <Companies />;
