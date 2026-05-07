@@ -10,8 +10,8 @@ interface SidebarProps {
 
 export function Sidebar({ activePage, onNavigate }: SidebarProps) {
   const navItems: { id: PageType; label: string; icon: React.ReactNode }[] = [
-    { id: 'companies', label: '公司管理', icon: <Building2 size={20} /> },
     { id: 'dashboard', label: '经营控制台', icon: <LayoutDashboard size={20} /> },
+    { id: 'companies', label: '公司管理', icon: <Building2 size={20} /> },
     { id: 'board', label: '目标与计划看板', icon: <Target size={20} /> },
     { id: 'assets', label: '数字资产', icon: <Database size={20} /> },
     { id: 'agents', label: 'Agent', icon: <Bot size={20} /> },

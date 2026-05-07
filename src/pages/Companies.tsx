@@ -1,7 +1,8 @@
-import React from 'react';
-import { Building2, Plus, ArrowUpRight, Target, Briefcase, ListTodo, Users, Bot, Database, Globe, Palette, CloudFog } from 'lucide-react';
+import React, { useState } from 'react';
+import { Building2, Plus, ArrowUpRight, Target, Briefcase, ListTodo, Users, Bot, Database, Globe, Palette, CloudFog, ArrowLeft, Activity } from 'lucide-react';
 import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '../components/ui/Tabs';
 
 const companiesData = [
   { 
@@ -58,6 +59,115 @@ const companiesData = [
 ];
 
 export function Companies() {
+  const [selectedCompany, setSelectedCompany] = useState<any>(null);
+
+  if (selectedCompany) {
+    return (
+      <div className="space-y-6 animate-in fade-in duration-300">
+        <button 
+          onClick={() => setSelectedCompany(null)}
+          className="flex items-center gap-2 text-sm text-slate-400 hover:text-white transition-colors"
+        >
+          <ArrowLeft size={16} /> 返回公司列表
+        </button>
+
+        <Card className="border-white/5 bg-black/20 shadow-xl overflow-hidden p-6 relative">
+          <div className={`absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl ${selectedCompany.color} rounded-full blur-[100px] -mr-20 -mt-20 pointer-events-none opacity-20`}></div>
+           
+           <div className="relative z-10">
+             <div className="flex items-start justify-between mb-6 pb-6 border-b border-white/[0.05]">
+               <div className="flex items-center gap-5">
+                  <div className="w-16 h-16 bg-black/40 border border-white/[0.1] rounded-2xl flex items-center justify-center shadow-inner relative overflow-hidden">
+                    <div className={`absolute inset-0 bg-gradient-to-br ${selectedCompany.color} opacity-20`}></div>
+                    <div className="relative z-10 scale-125">{selectedCompany.icon}</div>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-3 mb-1.5">
+                      <h1 className="text-2xl font-bold tracking-tight text-slate-100">{selectedCompany.name}</h1>
+                      <Badge 
+                        variant={selectedCompany.status === 'active' ? 'success' : 'default'} 
+                        className={`font-medium text-[11px] px-2.5 py-0.5 border ${selectedCompany.status === 'active' ? 'bg-green-500/10 text-green-400 border-green-500/20' : 'bg-slate-500/10 text-slate-400 border-slate-500/20'}`}
+                      >
+                        {selectedCompany.status === 'active' ? '运营中' : '孵化中'}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-slate-400">{selectedCompany.industry} <span className="mx-1.5 opacity-30">•</span> {selectedCompany.desc}</p>
+                  </div>
+               </div>
+             </div>
+
+             <Tabs defaultValue="overview">
+                <TabsList className="bg-black/40 border border-white/5 mb-6">
+                  <TabsTrigger value="overview" className="flex items-center gap-2">
+                     总览大盘
+                  </TabsTrigger>
+                  <TabsTrigger value="goals" className="flex items-center gap-2">
+                    <Target size={14} /> 目标 ({selectedCompany.stats.goals})
+                  </TabsTrigger>
+                  <TabsTrigger value="projects" className="flex items-center gap-2">
+                    <Briefcase size={14} /> 项目 ({selectedCompany.stats.projects})
+                  </TabsTrigger>
+                  <TabsTrigger value="tasks" className="flex items-center gap-2">
+                    <ListTodo size={14} /> 任务 ({selectedCompany.stats.tasks})
+                  </TabsTrigger>
+                  <TabsTrigger value="teams" className="flex items-center gap-2">
+                    <Users size={14} /> 履约团队 ({selectedCompany.stats.teams})
+                  </TabsTrigger>
+                  <TabsTrigger value="assets" className="flex items-center gap-2">
+                    <Database size={14} /> 数字资产 ({selectedCompany.stats.assets})
+                  </TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="overview">
+                  <div className="h-64 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <Activity size={40} className="mb-4 opacity-50 text-blue-400" />
+                    <p className="text-sm font-medium">公司级经营数据透视</p>
+                    <p className="text-xs text-slate-500 mt-2 max-w-sm text-center leading-relaxed">此处将加载基于财务、人力、项目推进的三维数据报表与核心经营指标。</p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="goals">
+                  <div className="h-48 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <Target size={32} className="mb-3 opacity-50 text-blue-400" />
+                    <p className="text-sm">目标管理</p>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="projects">
+                  <div className="h-48 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <Briefcase size={32} className="mb-3 opacity-50 text-purple-400" />
+                    <p className="text-sm">项目列表</p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="tasks">
+                  <div className="h-48 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <ListTodo size={32} className="mb-3 opacity-50 text-indigo-400" />
+                    <p className="text-sm">任务大盘</p>
+                  </div>
+                </TabsContent>
+
+                <TabsContent value="teams">
+                  <div className="h-48 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <Users size={32} className="mb-3 opacity-50 text-emerald-400" />
+                    <p className="text-sm">承接业务的履约团队与组织架构</p>
+                  </div>
+                </TabsContent>
+                
+                <TabsContent value="assets">
+                  <div className="h-48 rounded-2xl border border-dashed border-white/20 flex flex-col items-center justify-center text-slate-400 bg-white/[0.02]">
+                    <Database size={32} className="mb-3 opacity-50 text-cyan-400" />
+                    <p className="text-sm">知识图谱与数字化资产聚合库</p>
+                  </div>
+                </TabsContent>
+
+             </Tabs>
+           </div>
+        </Card>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -146,9 +256,12 @@ export function Companies() {
               </div>
 
               <div className="p-4 mt-auto border-t border-white/[0.05] bg-black/20">
-                <button className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-medium text-slate-300 bg-white/[0.03] hover:bg-blue-500/10 hover:text-blue-400 transition-colors border border-white/[0.05] hover:border-blue-500/30 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] relative overflow-hidden">
+                <button 
+                  onClick={() => setSelectedCompany(company)}
+                  className="w-full py-2.5 rounded-xl flex items-center justify-center gap-2 text-sm font-medium text-slate-300 bg-white/[0.03] hover:bg-blue-500/10 hover:text-blue-400 transition-colors border border-white/[0.05] hover:border-blue-500/30 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.15)] relative overflow-hidden"
+                >
                   <div className={`absolute inset-0 bg-gradient-to-r ${company.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`}></div>
-                  <span className="relative z-10 flex items-center gap-2">进入公司看板 <ArrowUpRight size={16} /></span>
+                  <span className="relative z-10 flex items-center gap-2">公司运营台 <ArrowUpRight size={16} /></span>
                 </button>
               </div>
             </div>
